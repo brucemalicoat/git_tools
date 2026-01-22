@@ -60,6 +60,8 @@ class   Datawindow(pandastable.Table):
                 # assume we are in a frame, and the frame is dedicated to this Table
                 # ------------------------------------------------------------------
                 self.grid(column=0,row=0,sticky='NSEW')
+                self.grid_rowconfigure(0, weight=1)
+                self.grid_columnconfigure(0, weight=1)
                 self.redraw()
                 self.show()
 
