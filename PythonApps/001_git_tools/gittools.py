@@ -42,10 +42,13 @@ w_main.frame_1.button_status = tkinter.Button( w_main.frame_1, text="Status", co
 w_main.frame_1.button_status.grid(row=0,column=0)
 
 def commit_clicked():
-    lstr_1 = myGit.git.execute("git add .") + "\n"
-    lstr_2 = myGit.git.execute('git commit -m "commit"') + "\n"
-    lstr_3 = myGit.git.execute('git push origin "' + myGit.active_branch.name + '"')
-    w_main.ivar_output_label['text']=lstr_1+lstr_2+lstr_3
+    try:
+            lstr_1 = myGit.git.execute("git add .") + "\n"
+            lstr_2 = myGit.git.execute('git commit -m "commit"') + "\n"
+            lstr_3 = myGit.git.execute('git push origin "' + myGit.active_branch.name + '"')
+            w_main.ivar_output_label['text']=lstr_1+lstr_2+lstr_3
+    except Exception as GitCommandError:
+            w_main.ivar_output_label['text']=str(GitCommandError)
 
 w_main.frame_1.button_status = tkinter.Button( w_main.frame_1, text="Commit", command=commit_clicked )
 w_main.frame_1.button_status.grid(row=1,column=0)
