@@ -50,7 +50,7 @@ def commit_clicked():
             lstr_2 = "git commit " + "\n" + myGit.git.execute('git commit -m "commit"') + "\n"
             lstr_3 = 'git push origin "' + myGit.active_branch.name + '"\n' + str(myGit.git.execute('git push origin "' + myGit.active_branch.name + '"',with_extended_output=True)) + "\n"
             print( lstr_3 )
-            w_main.ivar_output_label['text']=lstr_1+lstr_2+lstr_3
+            w_main.ivar_output_label['text']=lstr_1+"\n-------------------------------"+lstr_2+"\n-------------------------------"+lstr_3
     except Exception as GitCommandError:
             w_main.ivar_output_label['text']=str(GitCommandError)
 
