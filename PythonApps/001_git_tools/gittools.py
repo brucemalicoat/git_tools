@@ -46,6 +46,10 @@ w_main.frame_1.button_status.grid(row=0,column=0)
 
 def commit_clicked():
     try:
+            lstr_git_status = myGit.git.execute("git status")
+            if lstr_git_status.split("\n")[1] == "nothing to commit, working tree clean": 
+                    w_main.ivar_output_label['text']=lstr_git_status.split("\n")[1]
+                    return()
             lstr_1 = "git add ." + "\n" + myGit.git.execute("git add .") + "\n"
             lstr_2 = "git commit " + "\n" + myGit.git.execute('git commit -m "commit"') + "\n"
             lstr_3 = 'git push origin "' + myGit.active_branch.name + '"\n' + str(myGit.git.execute('git push origin "' + myGit.active_branch.name + '"',with_extended_output=True)) + "\n"
