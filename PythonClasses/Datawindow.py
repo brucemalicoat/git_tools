@@ -37,10 +37,11 @@ class   Datawindow(pandastable.Table):
                             **kargs):
 
                 arg_dataframe = kargs.get("dataframe")
-                if( kargs.get("fgcolor")                 != None): args["fgcolor"]               = "black"
-                if( kargs.get("bgcolor")                 != None): args["bgcolor"]               = "white"
-                if( kargs.get("showtoolbar")             != None): args["showtoolbar"]           = True
-                if( kargs.get("showstatusbar")           != None): args["showstatusbar"]         = True
+                if( kargs.get("fgcolor")                 == None): kargs["fgcolor"]               = "black"
+                if( kargs.get("bgcolor")                 == None): kargs["bgcolor"]               = "white"
+                if( kargs.get("showtoolbar")             == None): kargs["showtoolbar"]           = True
+                if( kargs.get("showstatusbar")           == None): kargs["showstatusbar"]         = True
+                if( kargs.get("enable_menus")            == None): kargs["enable_menus"]          = True
 
                 super().__init__(*args,**kargs)
 
@@ -64,6 +65,9 @@ class   Datawindow(pandastable.Table):
                 self.grid_columnconfigure(0, weight=1)
                 self.redraw()
                 self.show()
+
+        def     set_cell_background_color( self, x, y, color : str = "white" ):
+                self.rowcolors.iloc[x,y]=webcolors.name_to_hex(color)
 
 
         @staticmethod
