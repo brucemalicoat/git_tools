@@ -9,7 +9,7 @@ description:    These classes are to facilitate GUI presentation of various data
 
 classes in PythonClasses subdirectory
 ---------------------------------------------------------------------------------------------------------------------------
-inherit from:                  pandastable, tkinter, tkinter.ttk
+inherit from:                   pandastable, tkinter, tkinter.ttk
 ---------------------------------------------------------------------------------------------------------------------------
 repo:                           https://github.com/brucemalicoat/git_tools
 license:                        MIT

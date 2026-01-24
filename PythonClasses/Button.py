@@ -12,16 +12,16 @@ import webcolors
 import openpyxl.utils
 #endregion imports
 
-class   Notebook(tkinter.ttk.Notebook):
+class   Button(tkinter.Button):
         """     
         ---------------------------------------------------------------------------------------------------------------------------
-        class:                          Notebook
-        inherits from:                  tkinter.ttk.Notebook
+        class:                          Buntton
+        inherits from:                  tkinter.Button
         ---------------------------------------------------------------------------------------------------------------------------
         repo:                           https://github.com/brucemalicoat/git_tools
         license:                        MIT
         created:                        2026-01-20 Bruce Malicoat - no Jira ticket #
-        description:                    extend the functionality of tkinter.ttk.Notebook
+        description:                    extend the functionality of tkinter.Button
         ---------------------------------------------------------------------------------------------------------------------------
         modified:
         description:
@@ -36,8 +36,5 @@ class   Notebook(tkinter.ttk.Notebook):
 
                 super().__init__(*args,**kargs)
 
-                noteStyle = tkinter.ttk.Style()
-                noteStyle.theme_use('default')
-                noteStyle.configure("TNotebook", background="White", borderwidth=0)
-                noteStyle.configure("TNotebook.Tab", background="Light Grey", borderwidth=0)
-                # noteStyle.map("TNotebook", background=[("selected", "Green")])
+        def     clicked():
+                pass

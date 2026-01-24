@@ -57,27 +57,21 @@ class   Label(tkinter.Label):
                 self.ivar_font = tkinter.font.Font( family = arg_font_family, size= arg_font_size, weight = arg_font_style )
                 self.configure(font=self.ivar_font)
                 
-        def     set_cell_background_color(      self,
-                                                color : str = "white" ):
-                 # -----------------------------------------------------------------------------------------------------------      
-                # function:     set_label_background_color
-                # -----------------------------------------------------------------------------------------------------------      
-                # created:      2026-01-20 Bruce Malicoat   
-                # description:  this method of setting cell background color is specific to pandastable
-                # -----------------------------------------------------------------------------------------------------------      
-               self.configure("bg",webcolors.name_to_hex(color))
-
-        def     set_cell_background_color(      self,
+        def     set_background_color(           self,
+                                                color : str = "",
                                                 red     : int = 255,
                                                 green   : int = 255,
-                                                blue    : int = 255
-                                        ):
+                                                blue    : int = 255 ):
                  # -----------------------------------------------------------------------------------------------------------      
                 # function:     set_label_background_color
                 # -----------------------------------------------------------------------------------------------------------      
                 # created:      2026-01-20 Bruce Malicoat   
                 # description:  this method of setting cell background color is specific to pandastable
                 # -----------------------------------------------------------------------------------------------------------      
+                if( color != "" ):
+                        self.configure(bg=webcolors.name_to_hex(color))
+                        return()
+
                 rgbtuple = (red,green,blue)
                 rgbhex = str(webcolors.rgb_to_hex(rgbtuple))
                 self.configure(bg=rgbhex)

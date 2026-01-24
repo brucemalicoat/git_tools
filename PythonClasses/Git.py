@@ -1,43 +1,27 @@
 #region imports
-import tkinter
-import tkinter.ttk
-import sys
-import pandastable
-import pandas
-import numpy
-import tksheet
-from   decimal import Decimal
-import decimal
-import webcolors
-import openpyxl.utils
+from git import Repo # pip install GitPython
 #endregion imports
 
-class   Notebook(tkinter.ttk.Notebook):
+class   Git(Repo):
         """     
         ---------------------------------------------------------------------------------------------------------------------------
-        class:                          Notebook
-        inherits from:                  tkinter.ttk.Notebook
+        class:                          Git
+        inherits from:                  git.Repo
         ---------------------------------------------------------------------------------------------------------------------------
         repo:                           https://github.com/brucemalicoat/git_tools
         license:                        MIT
         created:                        2026-01-20 Bruce Malicoat - no Jira ticket #
-        description:                    extend the functionality of tkinter.ttk.Notebook
+        description:                    interact with a git library
         ---------------------------------------------------------------------------------------------------------------------------
         modified:
         description:
         ---------------------------------------------------------------------------------------------------------------------------
         """
-
+        
         # constructor - extend super().__init__
         # -------------------------------------
-        def     __init__(   self,
-                            *args,
-                            **kargs):
+        def     __init__(       self,
+                                *args,
+                                **kargs):
 
                 super().__init__(*args,**kargs)
-
-                noteStyle = tkinter.ttk.Style()
-                noteStyle.theme_use('default')
-                noteStyle.configure("TNotebook", background="White", borderwidth=0)
-                noteStyle.configure("TNotebook.Tab", background="Light Grey", borderwidth=0)
-                # noteStyle.map("TNotebook", background=[("selected", "Green")])
