@@ -46,9 +46,9 @@ w_main.frame_1.button_status.grid(row=0,column=0)
 
 def commit_clicked():
     try:
-            lstr_1 = myGit.git.execute("git add .") + "\n"
-            lstr_2 = myGit.git.execute('git commit -m "commit"') + "\n"
-            lstr_3 = myGit.git.execute('git push origin "' + myGit.active_branch.name + '"')
+            lstr_1 = "git add ." + "\n" + myGit.git.execute("git add .") + "\n"
+            lstr_2 = "git commit " + "\n" + myGit.git.execute('git commit -m "commit"') + "\n"
+            lstr_3 = 'git push origin "' + myGit.active_branch.name + '"\n' + myGit.git.execute('git push origin "' + myGit.active_branch.name + '"') + "\n"
             w_main.ivar_output_label['text']=lstr_1+lstr_2+lstr_3
     except Exception as GitCommandError:
             w_main.ivar_output_label['text']=str(GitCommandError)
