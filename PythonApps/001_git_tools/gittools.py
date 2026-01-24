@@ -35,8 +35,11 @@ w_main.ivar_config_label[idx+1]['text'] += 'current branch'.ljust(40,' ') + ': '
 w_main.ivar_config_label[idx+2]['text'] += 'git version'.ljust(40,' ') + ': ' + str(myGit.git.version_info)
 
 def status_clicked():
-    lstr_git_status = myGit.git.execute("git status")
-    w_main.ivar_output_label['text']=lstr_git_status
+    try:
+            lstr_git_status = myGit.git.execute("git status")
+            w_main.ivar_output_label['text']=lstr_git_status
+    except Exception as GitCommandError:
+            w_main.ivar_output_label['text']=str(GitCommandError)
 
 w_main.frame_1.button_status = tkinter.Button( w_main.frame_1, text="Status", command=status_clicked )
 w_main.frame_1.button_status.grid(row=0,column=0)
