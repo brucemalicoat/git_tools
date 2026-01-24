@@ -67,7 +67,13 @@ class   Datawindow(pandastable.Table):
                 self.show()
 
         def     set_cell_background_color( self, x, y, color : str = "white" ):
-                self.rowcolors.iloc[x,y]=webcolors.name_to_hex(color)
+                 # -----------------------------------------------------------------------------------------------------------      
+                # function:     set_cell_background_color
+                # -----------------------------------------------------------------------------------------------------------      
+                # created:      2026-01-20 Bruce Malicoat   
+                # description:  this method of setting cell background color is specific to pandastable
+                # -----------------------------------------------------------------------------------------------------------      
+               self.rowcolors.iloc[x,y]=webcolors.name_to_hex(color)
 
 
         @staticmethod
@@ -98,6 +104,7 @@ class   Datawindow(pandastable.Table):
                 # description:  because of rounding issues inherent in float values, convert all float values to Decimal. 
                 #               This is more geared for anything modeling / using financial data with currencies than
                 #               abstract calculations in float.
+                #               A lot of ways you will import data (excel/csv/some db types) will end up with float.
                 # -----------------------------------------------------------------------------------------------------------      
                 for     row_index   in range(arg_dataframe.shape[0]):
                         if( isinstance(arg_dataframe.iloc[row_index,0],float) ):

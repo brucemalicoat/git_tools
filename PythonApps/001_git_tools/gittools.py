@@ -16,6 +16,10 @@ w_main = Window(title="gittools v1.0.0")
 # main window properties
 # ----------------------
 w_main.StandardWindow1( tabcount = 2, framecount = 2, tabnames=['Configuration','Data'] )
+
 w_main.ivar_datatable.set_cell_background_color(x=3,y=3,color="red")
+
+w_main.ivar_helpfile_label.set_cell_background_color( 250,250,225)
+w_main.ivar_helpfile_label.loadfile( "helpfile.txt" )
 
 w_main.mainloop()

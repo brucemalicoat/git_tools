@@ -1,0 +1,15 @@
+HELPFILE
+-----------
+
+GUI class library
+
+created:        2026-01-24 Bruce Malicoat
+description:    These classes are to facilitate GUI presentation of various data tasks or machine learning tasks in a
+                window using dataframes.
+
+classes in PythonClasses subdirectory
+---------------------------------------------------------------------------------------------------------------------------
+inherit from:                  pandastable, tkinter, tkinter.ttk
+---------------------------------------------------------------------------------------------------------------------------
+repo:                           https://github.com/brucemalicoat/git_tools
+license:                        MIT

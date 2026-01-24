@@ -14,6 +14,7 @@ sys.path.append('../..')
 from    PythonClasses.Datawindow      import  Datawindow
 from    PythonClasses.Frame           import  Frame
 from    PythonClasses.Notebook        import  Notebook
+from    PythonClasses.Label           import  Label
 #endregion imports
 
 class   Window(tkinter.Tk):
@@ -38,6 +39,7 @@ class   Window(tkinter.Tk):
         ivar_tabcount           :       int = 2
         ivar_tabnames           =       ["Tab1","Tab2"]
         ivar_datatable          =       None  
+        ivar_helpfile_label     =       None
 
 
         # constructor - extend super().__init__
@@ -87,13 +89,14 @@ class   Window(tkinter.Tk):
                                 self.ivar_tabnames = kargs.get("tabnames")
 
                 if( self.ivar_framecount > 0 ):
-                        self.frame_1 = Frame(self, bg="white")
+                        self.frame_1 = Frame(self, bg="white",padx=0,pady=0)
                         self.frame_1.grid(row=0,column=0,sticky="NW")
                         self.frame_1.grid_rowconfigure(0, weight=1)
                         self.frame_1.grid_columnconfigure(0, weight=1)
 
+
                 if( self.ivar_framecount > 1 ):
-                        self.frame_2 = Frame(self, bg="white",width=900, height=700)
+                        self.frame_2 = Frame(self, bg="white",width=900, height=700,padx=0,pady=0)
                         self.frame_2.grid(row=0,column=1,sticky="NSEW")
                         self.frame_2.grid_rowconfigure(0, weight=1)
                         self.frame_2.grid_columnconfigure(0, weight=1)
@@ -106,7 +109,7 @@ class   Window(tkinter.Tk):
                                 self.frame_2.notebook_1.grid_rowconfigure(0, weight=1)
                                 self.frame_2.notebook_1.grid_columnconfigure(0, weight=1)
 
-                                self.frame_2.notebook_1.frame_1 = Frame(master=self.frame_2.notebook_1, bg="lightblue")
+                                self.frame_2.notebook_1.frame_1 = Frame(master=self.frame_2.notebook_1, bg="lightblue",padx=0,pady=0)
                                 self.frame_2.notebook_1.frame_1.grid(column=0,row=0,sticky='NSEW')
                                 self.frame_2.notebook_1.frame_1.grid_rowconfigure(0, weight=1)
                                 self.frame_2.notebook_1.frame_1.grid_columnconfigure(0, weight=1)               # self.notebook_1.tab_2 = Frame(master=self.notebook_1, bg="lightgreen")
@@ -116,9 +119,13 @@ class   Window(tkinter.Tk):
                                 else:
                                         self.frame_2.notebook_1.add(self.frame_2.notebook_1.frame_1, text='Tab1')
 
+                                self.ivar_helpfile_label = Label( self.frame_2.notebook_1.frame_1 ,padx=0,pady=0)
+                                self.ivar_helpfile_label.grid(row=0,column=0,sticky="NSEW")
+                                # self.frame_2.notebook_1.frame_1.grid_rowconfigure(0, weight=1)
+                                # self.frame_2.notebook_1.frame_1.grid_columnconfigure(0, weight=1) 
                         if( self.ivar_tabcount > 1):
 
-                                self.frame_2.notebook_1.frame_2 = Frame(master=self.frame_2.notebook_1, bg="lightblue")
+                                self.frame_2.notebook_1.frame_2 = Frame(master=self.frame_2.notebook_1, bg="lightblue",padx=0,pady=0)
                                 self.frame_2.notebook_1.frame_2.grid(column=1,row=0,sticky='NSEW')
                                 # the below code causes the pandastable to come out weird looking with too large row header and column name
                                 # but you need it on the parent frame :/
@@ -135,7 +142,8 @@ class   Window(tkinter.Tk):
                                 # pandastable
                                 # -----------
                                 self.ivar_datatable = Datawindow(       parent=self.frame_2.notebook_1.frame_2,
-                                                                        dataframe=Datawindow.random_filled(75,50)
+                                                                        dataframe=Datawindow.random_filled(75,50),
+                                                                        padx=0,pady=0
                                                                 )
 
 
