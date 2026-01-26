@@ -57,8 +57,7 @@ class   Git(Repo):
                         print( "git error: " + self.ivar_error )
                         raise GitCommandError
 
-        def     push(         self,
-                                arg_commit_message : str 
+        def     push(         self
                         )->str:
 
                 try:
