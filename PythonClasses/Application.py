@@ -59,6 +59,9 @@ class   Application():
                         if lstr_commit_message == None:
                                 self.w_main.ivar_output_label['text']="You must enter a commit message to do a commit operation." 
                                 return()
+
+                        self.w_main.ivar_output_label['text']="please wait..."
+
                         lstr_result  = "git add ." + "\n"         
                         lstr_result += self.ivar_Git.add() + "\n"
                         lstr_result += "-------------------------------\n"

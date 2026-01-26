@@ -62,7 +62,7 @@ class   Git(Repo):
                         )->str:
 
                 try:
-                        lstr_result                     = str(self.git.execute('git push origin "' + self.active_branch.name + '"',with_extended_output=True))  
+                        #lstr_result                     = str(self.git.execute('git push origin "' + self.active_branch.name + '"',with_extended_output=True))  
 
                         # compare local last branch commit id vs remote commit id (maybe parnoid but)
                         self.ivar_last_commit_id        = self.git.execute('git rev-parse HEAD').replace('"','')

@@ -62,8 +62,8 @@ class   Window(tkinter.Tk):
                 # some defaults. override after class object created if you want/need
                 self.configure(background="white")
                 #self.state('zoomed')
-                self.geometry("1024x768+1+1")
-                self.minsize(1024, 768)
+                self.geometry("600x600+1+1")
+                self.minsize(600, 600)
                 self.grid()
                 self.grid_rowconfigure(0, weight=1)
                 self.grid_columnconfigure(1, weight=1)
