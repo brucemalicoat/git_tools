@@ -17,6 +17,7 @@ class   Git(Repo):
         description:
         ---------------------------------------------------------------------------------------------------------------------------
         """
+        ivar_error : str = ""
         
         # constructor - extend super().__init__
         # -------------------------------------
@@ -25,3 +26,45 @@ class   Git(Repo):
                                 **kargs):
 
                 super().__init__(*args,**kargs)
+
+        def     status(         self )->str:
+                try:
+                        return( self.git.execute("git status") )
+
+                except Exception as GitCommandError:
+                        self.ivar_error = str(GitCommandError)
+                        print( "git error: " + self.ivar_error )
+                        raise GitCommandError
+
+        def     add(         self )->str:
+                try:
+                        return( self.git.execute("git add .") )
+
+                except Exception as GitCommandError:
+                        self.ivar_error = str(GitCommandError)
+                        print( "git error: " + self.ivar_error )
+                        raise GitCommandError
+
+        def     commit(         self,
+                                arg_commit_message : str 
+                        )->str:
+
+                try:
+                        return( self.git.execute('git commit -m "' + arg_commit_message.replace('"',"'") + '"') )
+
+                except Exception as GitCommandError:
+                        self.ivar_error = str(GitCommandError)
+                        print( "git error: " + self.ivar_error )
+                        raise GitCommandError
+
+        def     push(         self,
+                                arg_commit_message : str 
+                        )->str:
+
+                try:
+                        return( str(self.git.execute('git push origin "' + self.active_branch.name + '"',with_extended_output=True))  )
+
+                except Exception as GitCommandError:
+                        self.ivar_error = str(GitCommandError)
+                        print( "git error: " + self.ivar_error )
+                        raise GitCommandError
