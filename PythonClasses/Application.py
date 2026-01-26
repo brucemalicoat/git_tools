@@ -60,7 +60,7 @@ class   Application():
                                 return()
 
                         lstr_1 = "git add ." + "\n"         + self.ivar_Git.add() + "\n"
-                        lstr_2 = "git commit " + "\n"       + self.ivar_Git.commit( lstr_commit_message )+ "\n"
+                        lstr_2 = "git commit " + "\n"       + self.ivar_Git.commit( arg_commit_message=lstr_commit_message )+ "\n"
                         lstr_3 = 'git push origin "'        + self.ivar_Git.push() + "\n"
 
                         self.w_main.ivar_output_label['text']=lstr_1+"\n-------------------------------\n"+lstr_2+"\n-------------------------------\n"+lstr_3
