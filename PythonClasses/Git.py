@@ -18,6 +18,7 @@ class   Git(Repo):
         ---------------------------------------------------------------------------------------------------------------------------
         """
         ivar_error : str = ""
+        ivar_last_commit_id : str = ""
         
         # constructor - extend super().__init__
         # -------------------------------------
@@ -61,7 +62,15 @@ class   Git(Repo):
                         )->str:
 
                 try:
-                        return( str(self.git.execute('git push origin "' + self.active_branch.name + '"',with_extended_output=True))  )
+                        lstr_result                     = str(self.git.execute('git push origin "' + self.active_branch.name + '"',with_extended_output=True))  
+                        self.ivar_last_commit_id        = self.git.execute('git rev-parse HEAD')
+                        self.git.execute('git fetch --quiet --all')
+                        self.ivar_last_remote_commit_id = self.git.execute('git rev-parse origin/'+self.active_branch.name)
+
+                        if (self.ivar_last_commit_id == self.ivar_last_remote_commit_id):
+                                return(self.ivar_last_commit_id + ' has been pushed to origin '+self.active_branch.name)
+                        else:
+                                return("mismatch between local commit:" + self.ivar_last_commit_id + " and remote commit:" + self.ivar_last_remote_commit_id)
 
                 except Exception as GitCommandError:
                         self.ivar_error = str(GitCommandError)
