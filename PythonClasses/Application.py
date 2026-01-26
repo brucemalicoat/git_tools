@@ -49,6 +49,7 @@ class   Application():
 
         def commit_clicked( self ):
             try:
+                        # commit any pending git changes after add . 
                         lstr_git_status = self.ivar_Git.git.execute("git status")
                         if lstr_git_status.split("\n")[1] == "nothing to commit, working tree clean": 
                                 self.w_main.ivar_output_label['text']=lstr_git_status.split("\n")[1]
