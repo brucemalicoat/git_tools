@@ -59,11 +59,14 @@ class   Application():
                         if lstr_commit_message == None:
                                 self.w_main.ivar_output_label['text']="You must enter a commit message to do a commit operation." 
                                 return()
-                        lstr_result  = "git add ." + "\n"         + self.ivar_Git.add() + "\n"
+                        lstr_result  = "git add ." + "\n"         
+                        lstr_result += self.ivar_Git.add() + "\n"
                         lstr_result += "-------------------------------\n"
-                        lstr_result += 'git commit -m "' + lstr_commit_message + "\n"       + self.ivar_Git.commit( arg_commit_message=lstr_commit_message )+ "\n"
+                        lstr_result += 'git commit -m "' + lstr_commit_message + '"\n'      
+                        lstr_result += self.ivar_Git.commit( arg_commit_message=lstr_commit_message )+ "\n"
                         lstr_result += "-------------------------------\n"
-                        lstr_result += 'git push origin "'        + self.ivar_Git.push() + "\n"
+                        lstr_result += 'git push origin/' + self.ivar_Git.active_branch.name + "\n"   
+                        lstr_result += self.ivar_Git.push() + "\n"
 
                         self.w_main.ivar_output_label['text']=lstr_result
 
