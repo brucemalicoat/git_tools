@@ -146,10 +146,10 @@ class   Window(tkinter.Tk):
 
                                 # pandastable
                                 # -----------
-                                self.ivar_datatable = Datawindow(       parent=self.frame_2.notebook_1.frame_2,
-                                                                        dataframe=Datawindow.random_filled(75,50),
-                                                                        padx=0,pady=0
-                                                                )
+                                self.frame_2.notebook_1.frame_2.ivar_datatable = Datawindow(    parent=self.frame_2.notebook_1.frame_2,
+                                                                                                dataframe=Datawindow.random_filled(75,50),
+                                                                                                padx=0,pady=0
+                                                                                        )
 
 
 

@@ -3,14 +3,13 @@ import  os
 os.chdir(project_directory)
 import sys
 sys.path.append('../..')
-from    PythonClasses.Application     import  Application
+from    gitApplication     import  gitApplication
 
 
-myApp = Application(    arg_title               =       "gittools v1.0.0")
-myApp.readConig(        arg_config_filename     =       "gittools.ini")
+myApp = gitApplication(     arg_title               =       "gittools v1.0.0")
+myApp.readConig(            arg_config_filename     =       "gittools.ini")
 myApp.setGit()
 myApp.run()                                
-
 
 
 
