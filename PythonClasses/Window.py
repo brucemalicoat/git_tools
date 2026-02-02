@@ -14,6 +14,7 @@ sys.path.append('../..')
 from    PythonClasses.Datawindow      import  Datawindow
 from    PythonClasses.Frame           import  Frame
 from    PythonClasses.Notebook        import  Notebook
+from    PythonClasses.Label           import  Label
 #endregion imports
 
 class   Window(tkinter.Tk):
@@ -38,6 +39,8 @@ class   Window(tkinter.Tk):
         ivar_tabcount           :       int = 2
         ivar_tabnames           =       ["Tab1","Tab2"]
         ivar_datatable          =       None  
+        ivar_output_label       =       None
+        ivar_config_label       =       []
 
 
         # constructor - extend super().__init__
@@ -59,8 +62,8 @@ class   Window(tkinter.Tk):
                 # some defaults. override after class object created if you want/need
                 self.configure(background="white")
                 #self.state('zoomed')
-                self.geometry("1024x768+1+1")
-                self.minsize(1024, 768)
+                self.geometry("600x600+1+1")
+                self.minsize(600, 600)
                 self.grid()
                 self.grid_rowconfigure(0, weight=1)
                 self.grid_columnconfigure(1, weight=1)
@@ -87,13 +90,14 @@ class   Window(tkinter.Tk):
                                 self.ivar_tabnames = kargs.get("tabnames")
 
                 if( self.ivar_framecount > 0 ):
-                        self.frame_1 = Frame(self, bg="white")
+                        self.frame_1 = Frame(self, bg="white",padx=0,pady=0)
                         self.frame_1.grid(row=0,column=0,sticky="NW")
                         self.frame_1.grid_rowconfigure(0, weight=1)
                         self.frame_1.grid_columnconfigure(0, weight=1)
 
+
                 if( self.ivar_framecount > 1 ):
-                        self.frame_2 = Frame(self, bg="white",width=900, height=700)
+                        self.frame_2 = Frame(self, bg="white",width=900, height=700,padx=0,pady=0)
                         self.frame_2.grid(row=0,column=1,sticky="NSEW")
                         self.frame_2.grid_rowconfigure(0, weight=1)
                         self.frame_2.grid_columnconfigure(0, weight=1)
@@ -106,7 +110,7 @@ class   Window(tkinter.Tk):
                                 self.frame_2.notebook_1.grid_rowconfigure(0, weight=1)
                                 self.frame_2.notebook_1.grid_columnconfigure(0, weight=1)
 
-                                self.frame_2.notebook_1.frame_1 = Frame(master=self.frame_2.notebook_1, bg="lightblue")
+                                self.frame_2.notebook_1.frame_1 = Frame(master=self.frame_2.notebook_1, bg="Light Grey",padx=4,pady=4)
                                 self.frame_2.notebook_1.frame_1.grid(column=0,row=0,sticky='NSEW')
                                 self.frame_2.notebook_1.frame_1.grid_rowconfigure(0, weight=1)
                                 self.frame_2.notebook_1.frame_1.grid_columnconfigure(0, weight=1)               # self.notebook_1.tab_2 = Frame(master=self.notebook_1, bg="lightgreen")
@@ -116,9 +120,17 @@ class   Window(tkinter.Tk):
                                 else:
                                         self.frame_2.notebook_1.add(self.frame_2.notebook_1.frame_1, text='Tab1')
 
+                                self.ivar_output_label = Label( self.frame_2.notebook_1.frame_1 ,padx=0,pady=0)
+                                self.ivar_output_label.grid(row=0,column=0,sticky="NSEW")
+
+                                for idx in range(5) :
+                                        self.ivar_config_label.append( Label( self.frame_2.notebook_1.frame_1 ,padx=0,pady=0) )
+                                        self.ivar_config_label[idx].grid(row=idx+1,column=0,sticky="NSEW")
+                                        self.ivar_config_label[idx].set_background_color( red=200,green=200,blue=200)
+
                         if( self.ivar_tabcount > 1):
 
-                                self.frame_2.notebook_1.frame_2 = Frame(master=self.frame_2.notebook_1, bg="lightblue")
+                                self.frame_2.notebook_1.frame_2 = Frame(master=self.frame_2.notebook_1, bg="Light Grey",padx=4,pady=4)
                                 self.frame_2.notebook_1.frame_2.grid(column=1,row=0,sticky='NSEW')
                                 # the below code causes the pandastable to come out weird looking with too large row header and column name
                                 # but you need it on the parent frame :/
@@ -134,9 +146,10 @@ class   Window(tkinter.Tk):
 
                                 # pandastable
                                 # -----------
-                                self.ivar_datatable = Datawindow(       parent=self.frame_2.notebook_1.frame_2,
-                                                                        dataframe=Datawindow.random_filled(75,50)
-                                                                )
+                                self.frame_2.notebook_1.frame_2.ivar_datatable = Datawindow(    parent=self.frame_2.notebook_1.frame_2,
+                                                                                                dataframe=Datawindow.random_filled(75,50),
+                                                                                                padx=0,pady=0
+                                                                                        )
 
 
 

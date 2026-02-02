@@ -1,43 +1,34 @@
 #region imports
-import tkinter
-import tkinter.ttk
-import sys
-import pandastable
-import pandas
-import numpy
-import tksheet
-from   decimal import Decimal
-import decimal
-import webcolors
-import openpyxl.utils
+import configparser
 #endregion imports
 
-class   Notebook(tkinter.ttk.Notebook):
+class   Config(configparser.ConfigParser):
         """     
         ---------------------------------------------------------------------------------------------------------------------------
-        class:                          Notebook
-        inherits from:                  tkinter.ttk.Notebook
+        class:                          Config
+        inherits from:                  configparser.ConfigParser
         ---------------------------------------------------------------------------------------------------------------------------
         repo:                           https://github.com/brucemalicoat/git_tools
         license:                        MIT
         created:                        2026-01-20 Bruce Malicoat - no Jira ticket #
-        description:                    extend the functionality of tkinter.ttk.Notebook
+        description:                    parse a config ini file for the application in a consistent way
         ---------------------------------------------------------------------------------------------------------------------------
         modified:
         description:
         ---------------------------------------------------------------------------------------------------------------------------
         """
+        ivar_key_values : list = {}
 
         # constructor - extend super().__init__
         # -------------------------------------
         def     __init__(   self,
-                            *args,
-                            **kargs):
+                            arg_filename : str ):
 
-                super().__init__(*args,**kargs)
+                super().__init__()
+                self.read( arg_filename )
 
-                noteStyle = tkinter.ttk.Style()
-                noteStyle.theme_use('default')
-                noteStyle.configure("TNotebook", background="White", borderwidth=0)
-                noteStyle.configure("TNotebook.Tab", background="Light Grey", borderwidth=0)
-                # noteStyle.map("TNotebook", background=[("selected", "Green")])
+                for     section_name, section_proxy in self.items():
+                        for     key, value in section_proxy.items():
+
+                                dict_value_to_add={ (section_name, key): value }
+                                self.ivar_key_values.update(dict_value_to_add)
