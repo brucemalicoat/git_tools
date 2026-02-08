@@ -46,6 +46,17 @@ class   Git(Repo):
                         print( "git error: " + self.ivar_error )
                         raise GitCommandError
 
+        def     log(         self,
+                        )->str:
+
+                try:
+                        return( self.git.execute('git log --oneline' ) )
+
+                except Exception as GitCommandError:
+                        self.ivar_error = str(GitCommandError)
+                        print( "git error: " + self.ivar_error )
+                        raise GitCommandError
+
         def     commit(         self,
                                 arg_commit_message : str 
                         )->str:
