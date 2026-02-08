@@ -29,16 +29,33 @@ class   gitApplication(Application):
         description:
         ---------------------------------------------------------------------------------------------------------------------------
         """
-        def status_clicked( self ):
+        def btn_status_clicked( self ):
             try:
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].select(0)
                         lstr_git_status = self.ivar_Git.status()
                         self.w_main.ivar_output_label['text']=lstr_git_status
+
+            except Exception as GitCommandError:
+                        self.w_main.ivar_output_label['text']=str(GitCommandError)
+
+        def btn_log_clicked( self ):
+            try:
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].select(2)
+                        lvar_log = self.ivar_Git.log().split('\n')
+                        lvar_df  = pandas.DataFrame()
+                        lvar_df["Commit"]=lvar_log
+                        #print( lvar_log )
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[2].ivar_datatable.setDF(lvar_df)
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[2].ivar_datatable.columnwidths['Commit'] = 1000
+
             except Exception as GitCommandError:
                         self.w_main.ivar_output_label['text']=str(GitCommandError)
 
 
-        def commit_clicked( self ):
+        def btn_commit_clicked( self ):
             try:
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].select(0)
+
                         # commit any pending git changes after add . 
                         lstr_git_status = self.ivar_Git.git.execute("git status")
                         if lstr_git_status.split("\n")[1] == "nothing to commit, working tree clean": 
@@ -75,15 +92,19 @@ class   gitApplication(Application):
 
                         # main window properties
                         # ----------------------
-                        self.w_main.StandardWindow1( tabcount = 2, framecount = 2, tabnames=['Git','Data'] )
+                        self.w_main.StandardWindow1( tabnames=['Status','Git Info','Log','Modified'] )
 
                         self.w_main.ivar_output_label.set_background_color( color="White")
                         self.w_main.ivar_output_label.loadfile( "helpfile.txt" )
 
-                        self.w_main.frame_1.button_status = Button( self.w_main.frame_1, text="Status", command=self.status_clicked )
-                        self.w_main.frame_1.button_status.grid(row=0,column=0)
-                        self.w_main.frame_1.button_status = Button( self.w_main.frame_1, text="Commit", command=self.commit_clicked )
-                        self.w_main.frame_1.button_status.grid(row=1,column=0) 
+                        self.w_main.ivar_framelist[0].button_status       =       Button( self.w_main.ivar_framelist[0], text="Status", command=self.btn_status_clicked )
+                        self.w_main.ivar_framelist[0].button_status.grid(         row=0,column=0,sticky='EW')
+
+                        self.w_main.ivar_framelist[0].button_commit       =       Button( self.w_main.ivar_framelist[0], text="Commit/Push", command=self.btn_commit_clicked )
+                        self.w_main.ivar_framelist[0].button_commit.grid(         row=1,column=0,sticky='EW') 
+
+                        self.w_main.ivar_framelist[0].button_log          =       Button( self.w_main.ivar_framelist[0], text="History", command=self.btn_log_clicked )
+                        self.w_main.ivar_framelist[0].button_log.grid(            row=2,column=0,sticky='EW') 
 
         def     readConig(      self,
                                 arg_config_filename : str ):
@@ -99,24 +120,30 @@ class   gitApplication(Application):
                                         llist_section.append(   section )
                                         llist_key.append(       key_value_pair[0] )
                                         llist_value.append(     key_value_pair[1] )
-                                        print( "section:" + section + "   key:" + key_value_pair[0] + "   value:" + key_value_pair[1] )
+                                        # print( "section:" + section + "   key:" + key_value_pair[0] + "   value:" + key_value_pair[1] )
 
 
-                        self.w_main.frame_2.notebook_1.frame_2.ivar_datatable.model.df = pandas.DataFrame({     'Section'       :llist_section, 
-                                                                                                                'Key'           :llist_key,
-                                                                                                                'Value'         :llist_value } )
-                        self.w_main.frame_2.notebook_1.frame_2.ivar_datatable.update()
-                        self.w_main.frame_2.notebook_1.frame_2.ivar_datatable.redraw()
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.setDF( pandas.DataFrame({ 'Section'       :llist_section, 
+                                                                                                        'Key'           :llist_key,
+                                                                                                        'Value'         :llist_value } )
+                                                                                   )
+                        for index in range(len(llist_section)):                        
+                                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.set_cell_background_color( 0, index, "Yellow" )
 
-                        # for idx in range(len(self.ivarConfig.ivar_key_values)):
-                        #         if idx > 5: break
-                        #         self.w_main.ivar_config_label[idx]['text'] += str(list(self.ivarConfig.ivar_key_values.keys())[idx]).ljust(40,' ') + ': ' + list(self.ivarConfig.ivar_key_values.values())[idx]
 
         def     setGit(         self ):
 
                         self.ivar_Git = Git( self.ivarConfig.ivar_key_values[('git','repo_directory')])
-                        # self.w_main.ivar_config_label[len(list(self.ivarConfig.ivar_key_values.keys()))]['text'] += 'current branch'.ljust(40,' ') + ': ' + self.ivar_Git.active_branch.name
-                        # self.w_main.ivar_config_label[len(list(self.ivarConfig.ivar_key_values.keys()))+1]['text'] += 'git version'.ljust(40,' ') + ': ' + str(self.ivar_Git.git.version_info)
+                        df_length = len( self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.model.df )
+
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.model.df.loc[ df_length ]         = ['git','current branch',              self.ivar_Git.active_branch.name        ]
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.model.df.loc[ df_length + 1 ]     = ['git','git version',                 str(self.ivar_Git.git.version_info)     ]
+
+                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.redrawDF()
+                        for index in range(df_length+2):                        
+                                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.set_cell_background_color( 0, index, "Yellow" )
+                                        self.w_main.ivar_framelist[1].ivar_notebooklist[0].ivar_framelist[1].ivar_datatable.set_cell_background_color( 1, index, "Yellow" )
+
 
 
 

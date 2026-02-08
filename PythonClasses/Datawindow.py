@@ -47,16 +47,7 @@ class   Datawindow(pandastable.Table):
 
                 # df is the variable pandastables uses to store its datastore
                 # -----------------------------------------------------------
-                self.df = arg_dataframe
-
-                # initialize the row colors for all rows to force pandastable to populate/use the rowcolors dataframe, which
-                # you can use subsequent to class instantiation to set the bg color for any cell via iloc
-                # ----------------------------------------------------------------------------------------------------------
-                if(isinstance(self.df,pandas.DataFrame) and not(arg_dataframe.empty) ):
-                        list_of_rows = []
-                        for index in range(self.df.shape[0]):
-                                list_of_rows.append(index)
-                        self.setRowColors(list_of_rows,webcolors.name_to_hex('white'),'all')
+                self.model.df = arg_dataframe
 
                 # assume we are in a frame, and the frame is dedicated to this Table
                 # ------------------------------------------------------------------
@@ -73,8 +64,53 @@ class   Datawindow(pandastable.Table):
                 # created:      2026-01-20 Bruce Malicoat   
                 # description:  this method of setting cell background color is specific to pandastable
                 # -----------------------------------------------------------------------------------------------------------      
-               self.rowcolors.iloc[x,y]=webcolors.name_to_hex(color)
+                # print( str(self.rowcolors.shape[0]) + " x " + str(self.rowcolors.shape[1]) )
+                # print( 'set x=' + str(x) + ',  y=' + str(y) + ' to ' + color )
+                self.rowcolors.iloc[y,x]=webcolors.name_to_hex(color)
 
+        def     setDF( self, arg_new_dataframe : pandas.DataFrame ):
+                 # -----------------------------------------------------------------------------------------------------------      
+                # function:     setDF
+                # -----------------------------------------------------------------------------------------------------------      
+                # created:      2026-01-20 Bruce Malicoat   
+                # description:  update the data in this datawindow
+                # -----------------------------------------------------------------------------------------------------------      
+                self.model.df = arg_new_dataframe
+
+
+                # initialize the row colors for all rows to force pandastable to populate/use the rowcolors dataframe, which
+                # you can use subsequent to class instantiation to set the bg color for any cell via iloc
+                # ----------------------------------------------------------------------------------------------------------
+                self.redrawDF()
+
+        def     redrawDF( self ):
+                 # -----------------------------------------------------------------------------------------------------------      
+                # function:     redrawDF
+                # -----------------------------------------------------------------------------------------------------------      
+                # created:      2026-01-20 Bruce Malicoat   
+                # description:  update the data in this datawindow, including row color array
+                # -----------------------------------------------------------------------------------------------------------      
+                
+                # initialize the row colors for all rows to force pandastable to populate/use the rowcolors dataframe, which
+                # you can use subsequent to class instantiation to set the bg color for any cell via iloc
+                # ----------------------------------------------------------------------------------------------------------
+                if      ( self.model.df.shape[0] != self.rowcolors.shape[0] ) or \
+                        ( self.model.df.shape[1] != self.rowcolors.shape[1] ) :
+
+                                
+                        self.rowcolors = self.model.df
+                        self.rowcolors=self.rowcolors.astype('object')
+
+                        list_of_rows = []
+                        for index in range(self.model.df.shape[0]):
+                                list_of_rows.append(index)
+
+                        self.setRowColors(list_of_rows,webcolors.name_to_hex('white'),'all')
+                        # print(self.rowcolors)
+
+                self.update()
+                self.redraw()
+                self.autoResizeColumns()
 
         @staticmethod
         def     round(              arg_dataframe:pandas.DataFrame,
